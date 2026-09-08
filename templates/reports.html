@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}
+Report Analysis
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1>Report Analysis</h1>
+        <p>Upload medical reports to get info in simpler language</p>
+    </div>
+    <form action="{{url_for('reports')}}" method="POST" enctype="multipart/form-data" class="upload-form">
+    <div class="upload-box">
+        <h2>upload report</h2>
+        <p>pdf reports are supported</p>
+        <label for="report" class="file-label">Choose PDF</label>
+        <input type="file" id="report" name="report" accept=".pdf" required>
+        <div id="file-name" class="selected-file"></div>
+    </div>
+    <button type="submit">Analyze</button>
+    </form>
+    {% if error %}
+    <div class="error-box">
+        <div><strong>Unable to analyze report</strong><p>{{error}}</p></div>
+    </div>
+    {% endif %}
+    {% if analysis %}
+    <div class="report-result">
+        <div class="result-heading">
+            <h2>Report Analysis</h2>
+            {% if filename %}
+            <p>{{filename}}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="analysis-content">
+        {{analysis | safe}}
+    </div>
+    {% endif %}
+</div>
+<script>
+    const fileInput=document.getElementById("report");
+    const fileName=document.getElementById("file-name");
+    fileInput.addEventListener("change",function(){
+        if(this.files.length>0){
+            fileName.textContent="Selected: "+this.files[0].name;
+        }else{
+            fileName.textContent="No file selected";
+        }
+    });
+</script>
+{% endblock %}

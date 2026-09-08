@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}
+Health Trends
+{% endblock %}
+{% block content %}
+
+<div class="page-container">
+    <div class="page-header">
+        <h2>Health Trends</h2>
+        <p>Compare changes in your medical reports over time</p>
+    </div>
+    {% if trends_data %}
+    <div class="trend-summary">
+        <div class="trend-intro">
+            <h3>Your Report Trends</h3>
+            <p>These trends are generated from the medical report values you have previously uploaded.</p>
+        </div>
+    </div>
+    <div class="trends-grid">
+        {% for parameter, data in trends_data.items() %}
+        <div class="trend-card">
+            <div class="trend-card-header">
+                <div>
+                    <h3>{{parameter}}</h3>
+                    {% if data.latest_unit %}
+                    <span class="trend-unit">
+                        {{data.latest_unit}}
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="trend-status">
+                    {% if data.trend=="Increasing" %}
+                    <span class="trend-increasing">
+                        ↑ Increasing
+                    </span>
+                    {% elif data.trend=="Decreasing" %}
+                    <span class="trend-decreasing">
+                        ↓ Decreasing
+                    </span>
+                    {% elif data.trend=="Stable" %}
+                    <span class="trend-stable">
+                        → Stable
+                    </span>
+                    {% else %}
+                    <span class="trend-not-enough">
+                        Not enough data
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="latest-value">
+                <span>Latest Value</span>
+                <strong>
+                    {{data.latest_value}}
+                    {% if data.latest_unit %}
+                    {{ data.latest_unit }}
+                    {% endif %}
+                </strong>
+            </div>
+             {% if data.reference_range %}
+            <div class="reference-range">
+                <span>Reference Range</span>
+                <strong>
+                    {{ data.reference_range }}
+                </strong>
+            </div>
+            {% endif %}
+            <div class="chart-container">
+                <canvas id="chart-{{ loop.index }}"></canvas>
+            </div>
+            <div class="trend-history">
+                <h4>Recorded Values</h4>
+                {% for i in range(data["values"]|length) %}
+                <div class="trebd-row">
+                    <span>{{data["dates"][i]}}</span>
+                    <strong>
+                        {{data["values"][i]}}
+                        {% if data["units"][i] %}
+                        {{data["units"][i]}}
+                        {% endif %}
+                    </strong>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="coming-soon">
+         <h2>No health trends available yet</h2>
+            <p>
+                Upload at least one medical report containing
+                measurable health values to start tracking trends.
+            </p>
+            <a href="{{ url_for('reports') }}" class="card-button">
+                Upload Medical Report
+            </a>
+    </div>
+    {% endif %}
+</div>
+{% if trends_data %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script id="trends-data" type="application/json">
+{{ trends_data | tojson }}
+</script>
+<script>
+const trendsData = JSON.parse(
+    document.getElementById("trends-data").textContent
+);
+const charts = document.querySelectorAll("canvas");
+let chartIndex = 0;
+for (const [parameter, data] of Object.entries(trendsData)) {
+    const canvas = charts[chartIndex];
+    if (!canvas) {
+        continue;
+    }
+    new Chart(canvas, {
+        type: "line",
+        data: {
+            labels: data.dates,
+            datasets: [
+                {
+                    label: parameter,
+                    data: data.values,
+                    tension: 0.3,
+                    fill: false,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    });
+    chartIndex++;
+}
+</script>
+{% endif %}
+{% endblock %}

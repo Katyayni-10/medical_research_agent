@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}
+Medical Scan Analysis
+{% endblock %}
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <h2>Medical Scan Analysis</h2>
+        <p>Upload scans for AI-assisted analysis</p>
+    </div>
+    <form action="{{url_for('scans')}}" method="POST" enctype="multipart/form-data" class="scan-form">
+        <div class="scan-upload-box">
+        <h2>Upload scan</h2>
+        <p>X-ray, MRI,.....</p>
+        <label class="scan-label">Select scan type</label>
+        <select id="scan_type" name="scan_type" class="scan-select" required>
+            <option value="" disabled selected>Choose scan type</option>
+            <option value="x-ray">Chest X-ray</option>
+            <option value="MRI">MRI</option>
+            <option value="CT">CT scan</option>
+            <option value="ultrasound">ultrasound</option>
+            <option value="others">Other medical scans</option>
+        </select>
+        <label for="scan" class="file-label">Choose scan</label>
+        <input type="file" id="scan" name="scan" accept=".jpg,.jpeg,.png" required>
+        <div id="scan-file-name" class="selected-file">No scan detected</div>
+        </div>
+        <button type="submit">Upload scan</button>
+    </form>
+    {% if error %}
+    <div class="error-box">
+        <div>
+            <strong>Unable to analyze</strong>
+            <p>{{error}}</p>
+        </div>
+    </div>
+    {% endif %}
+    {% if analysis %}
+    <div class="scan-result">
+        <div class="result-heading">
+            <h2>Scan analysis</h2>
+            {% if filename %}
+            <p>{{filename}}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="analysis-content">
+        {{analysis}}
+    </div>
+    {% endif %}
+</div>
+<script>
+    const scanInput=document.getElementById("scan");
+    const scanFileName=document.getElementById("scan-file-name");
+    scanInput.addEventListener("change", function(){
+        if(this.files.length>0){
+            scanFileName.textContent ="Selected: " +this.files[0].name;
+        }
+        else{
+            scanFileName.textContent ="No scan selected";
+        }
+    });
+</script>
+{% endblock %}

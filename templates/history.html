@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}
+Chat History
+{% endblock %}
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1>Chat History</h1>
+        <p>previous medical research conversations</p>
+    </div>
+    {% if activities %}
+    <div class="history-list">
+        {% for item in activities %}
+        <div class="history-card">
+            <div class="history-date">
+                {{item.created_at.strftime("%d %B %Y • %I:%M %p")}}
+            </div>
+            {% if item.type == "research" %} 
+            <div class="history-type"> 🔬 Medical Research </div> 
+            <h3>{{ item.title }}</h3> 
+            <details> 
+                <summary> View Analysis </summary>
+                <div class="history-analysis">{{item.content | safe }}</div>
+            </details>
+            {% elif item.type == "report" %} 
+            <div class="history-type"> 📄 Medical Report </div> 
+            <h3>{{ item.title }}</h3> 
+            <details> 
+                <summary> View Report Analysis </summary> 
+                <div class="history-analysis"> {{ item.content | safe }} </div>
+            </details>
+            {% elif item.type == "scan" %}
+            <div class="history-type">🩻 Medical Scan</div>
+            <h3>{{ item.title }}</h3>
+            <p>Scan Type: {{ item.scan_type }}</p>
+            <details>
+                <summary>View Scan Analysis</summary>
+                <div class="history-analysis">{{ item.content | safe }}</div>
+            </details>
+            {% elif item.type == "medicine" %}
+            <div class="history-type">💊 Medicine Information</div>
+            <h3>{{ item.title }}</h3>
+            <details>
+                <summary>View Medicine Information</summary>
+                <div class="history-analysis">{{ item.content | safe }}</div>
+            </details>
+        {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="coming-soon">
+        <h2>No research history yet</h2>
+        <p>Your medical research conversation appears here</p>
+        <a href="{{url_for('research')}}" class="card-button">Start research</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

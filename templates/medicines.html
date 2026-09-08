@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}
+Medicine Information
+{% endblock %}
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1>Medicine Information</h1>
+        <p>Search info about medicines, their uses, precuations and effects</p>
+    </div>
+    <div class="medicine-search">
+        <h3>Search for a medicine</h3>
+        <p>Enter name of medicine to learn about its common uses, side effects and precuations</p>
+        <form method="POST">
+            <div class="medicine-input-group">
+                <input type="text" name="medicine" placeholder="eg: paracetamol" value="{{medicine_name or ''}}" required>
+                <button type="submit" class="card-button">Search</button>
+            </div>
+        </form>
+    </div>
+    {% if error %}
+    <div class="medicine-error">
+        {{error}}
+    </div>
+    {% endif %}
+    {% if medicine_info %}
+    <div class="medicine-result">
+        <div class="medicine-result-header">
+            <div>
+                <span>Medicine Information</span>
+                <h2>{{medicine_name}}</h2>
+            </div>
+        </div>
+        <div class="medicine-content">
+            {{medicine_info | replace("## ","<h3>") | replace("\n","<br>") | safe}}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}
+My profile
+{% endblock %}
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1>My profile</h1>
+        <p>Manage your info for personalized experiences</p>
+    </div>
+    <div class="profile-card">
+        <form method="POST">
+            <div class="profile-field">
+                <label>Name</label>
+                <input type="text" name="name" value="{{current_user.name}}" required>
+            </div>
+            <div class="profile-field">
+                <label>Email</label>
+                <input type="email" value="{{current_user.email}}" disabled>
+            </div>
+            <div class="profile-field">
+                <label>Age</label>
+                <input type="number" name="age" min="1" max="120" value="{{profile.age or ''}}" placeholder="Enter your age">
+            </div>
+            <div class="profile-field">
+                <label>Gender</label>
+                <select name="gender">
+                    <option value="">
+                        Prefer not to say
+                    </option>
+                    <option value="Female" {% if profile.gender=="Female" %} selected {% endif %}>
+                        Female
+                    </option>
+                    <option value="Male" {% if profile.gender=="Male" %} selected {% endif %}>
+                        Male
+                    </option>
+                    <option value="Other" {% if profile.gender=="Other" %} selected {% endif %}>
+                        Other
+                    </option>
+                </select>
+            </div>
+            <button type="submit">Save Profile</button>
+        </form>
+        <div class="profile-account">
+            <p>Account created: {{current_user.created_at.strftime("%d %B %Y")}}</p>
+            <a href="{{url_for('logout')}}" class="logout-button">Logout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

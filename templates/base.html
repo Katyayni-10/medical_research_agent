@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=0.1">
+        <title>{% block title %}MANI-MEDICAL RESEARCH ASSISTANT{% endblock %}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    </head>
+    <body>
+        <nav class="navbar">
+            <a href="{{url_for('home')}}" class="logo">
+                MANI
+            </a>
+            <div class="nav-links">
+                <a href="{{url_for('home')}}">Home</a>
+                <a href="{{url_for('history')}}">History</a>
+                <a href="{{url_for('about')}}">About</a>
+            </div>
+        </nav>
+
+        <main>
+            {% with messages=get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                <div class="flash-message{{category}}">
+                    {{message}}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            {% block content %}
+            {% endblock %}
+        </main>
+        <footer>
+            <p>MANI AI HEALTH ASSISTANT</p>
+            <p class="footer-disclaimer">This application provides AI-generated informationfor educational purposes and is not a substitutefor professional medical advice.</p>
+        </footer>
+    </body>
+</html>

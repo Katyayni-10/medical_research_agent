@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}
+Home-MANI
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-icon"></div>
+    <h1>Medical Research Assistant</h1>
+    <p class="hero-subtitle">Powered by Groq • LangGraph • PubMed</p>
+</section>
+{% if current_user.is_authenticated %}
+<div class="welcome-user">
+    Welcome-Back, {{current_user.name}}
+</div>
+{% else %}
+<div class="auth-home">
+    <p></p>
+    <div class="auth-home-button">
+        <a href="{{url_for('login')}}" class="card-button">Login</a>
+        <a href="{{url_for('register')}}" class="card-button">Create Account</a>
+    </div>
+</div>
+{% endif %}
+<section class="features">
+    <a href="{{url_for('research')}}" class="feature-card">
+        <h2>Medical research</h2>
+        <p>Ask medical questions on the go</p>
+        <span class="card-button">Open search</span>
+    </a>
+    <a href="{{url_for('reports')}}" class="feature-card">
+        <h2>Report Analysis</h2>
+        <p>Upload medical reports to get info in simpler language</p>
+        <span class="card-button">Analyze Report</span>
+    </a>
+    <a href="{{url_for('scans')}}" class="feature-card">
+        <h2>Medical Scan Analysis</h2>
+        <p>Upload scans for AI-assisted analysis</p>
+        <span class="card-button">Analyze scan</span>
+    </a>
+    <a href="{{url_for('trends')}}" class="feature-card">
+        <h2>Health Trends</h2>
+        <p>Compare changes in your medical reports over time</p>
+        <span class="card-button">View Trends</span>
+    </a>
+    <a href="{{url_for('medicines')}}" class="feature-card">
+        <h2>Medicine Information</h2>
+        <p>Search info about medicines, their uses, precuations and effects</p>
+        <span class="card-button">Search medicines</span>
+    </a>
+    <a href="{{url_for('profile')}}" class="feature-card">
+        <h2>My profile</h2>
+        <p>Manage your info for personalized experiences</p>
+        <span class="card-button">View Profile</span>
+    </a>
+</section>
+{% endblock %}
