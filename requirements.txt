@@ -1,0 +1,14 @@
+langgraph
+langchain
+langchain-groq
+wikipedia
+requests
+python-dotenv
+biopython
+feedparser
+Flask
+Flask-SQLAlchemy
+Flask-Login
+psycopg[binary]
+pypdf
+PyMuPDF
