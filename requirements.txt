@@ -12,3 +12,4 @@ Flask-Login
 psycopg[binary]
 pypdf
 PyMuPDF
+gunicorn
