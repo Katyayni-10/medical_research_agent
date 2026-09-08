@@ -19,18 +19,18 @@ Mani is an AI-powered medical assistant that answers medical questions, analyzes
 | Layer | Technology |
 |---|---|
 | LLM | [Groq](https://groq.com/) — fast LLM inference |
-| LLM Framework | [LangChain] |
-| AI Workflow | [LangGraph] |
-| Medical Literature | [PubMed email configuration] — for evidence-based medical information |
+| LLM Framework | LangChain |
+| AI Workflow | LangGraph |
+| Medical Literature | PubMed email configuration — for evidence-based medical information |
 | News / Current Info | [NewsAPI](https://newsapi.org/) — for health/medical news context |
 | Database | PostgreSQL — user login, authentication, chat history & health trend storage |
 | Database Hosting | Neon PostgreSQL |
-| Authentication | [Flask-Login] |
-| ORM | [Flask-SQLAlchemy] |
-| Environment Management | [python-dotenv] |
-| Backend | [Flask] |
-| Frontend | [HTML/CSS/JavaScript with Jinja templates] |
-| PDF Processing | [PyMuPDF (fitz)] |
+| Authentication | Flask-Login |
+| ORM | Flask-SQLAlchemy |
+| Environment Management | python-dotenv |
+| Backend | Flask |
+| Frontend | HTML/CSS/JavaScript with Jinja templates |
+| PDF Processing | PyMuPDF (fitz) |
 | Deployment | Render |
 
 ## 📁 Project Structure
