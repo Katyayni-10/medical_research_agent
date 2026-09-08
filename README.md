@@ -18,28 +18,52 @@ Mani is an AI-powered medical assistant that answers medical questions, analyzes
 
 | Layer | Technology |
 |---|---|
-| LLM / AI | [Groq](https://groq.com/) — fast LLM inference |
-| Medical Literature | [PubMed API](https://www.ncbi.nlm.nih.gov/home/develop/api/) — for evidence-based medical information |
+| LLM | [Groq](https://groq.com/) — fast LLM inference |
+| LLM Framework | [LangChain] |
+| AI Workflow | [LangGraph] |
+| Medical Literature | [PubMed email configuration] — for evidence-based medical information |
 | News / Current Info | [NewsAPI](https://newsapi.org/) — for health/medical news context |
 | Database | PostgreSQL — user login, authentication, chat history & health trend storage |
-| Backend | [fill in: Python — Flask / FastAPI / Django] |
-| Frontend | [HTML-CSS-JS] |
-| OCR / Document Parsing | [fill in if used: Tesseract / PyPDF2 / other, for reading scanned reports] |
+| Database Hosting | Neon PostgreSQL |
+| Authentication | [Flask-Login] |
+| ORM | [Flask-SQLAlchemy] |
+| Environment Management | [python-dotenv] |
+| Backend | [Flask] |
+| Frontend | [HTML/CSS/JavaScript with Jinja templates] |
+| PDF Processing | [PyMuPDF (fitz)] |
 | Deployment | Render |
 
 ## 📁 Project Structure
 
 ```
-mani/
-├── backend/
-│   ├── app.py                  # main app entry point
-│   ├── routes/                 # API endpoints
-│   ├── models/                 # DB models (chat history, reports, trends)
-│   ├── services/                # LLM calls, report parsing, trend analysis
-│   └── requirements.txt
-├── frontend/                   # if separate from backend
+Medical_Research_Agent/
+│
+├── app.py
+├── graph.py
+├── report_analyzer.py
+├── scan_analyzer.py
+├── models.py
+├── extensions.py
+│
+├── templates/
+│   ├── home.html
+│   ├── login.html
+│   ├── register.html
+│   ├── research.html
+│   ├── reports.html
+│   ├── scans.html
+│   ├── medicines.html
+│   ├── history.html
+│   ├── trends.html
+│   ├── profile.html
+│   └── about.html
+│
+├── static/
+│   ├── css/
 │   └── ...
-├── .env.example                 # environment variable template
+│
+├── requirements.txt
+├── .gitignore
 └── README.md
 ```
 
